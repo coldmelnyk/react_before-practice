@@ -23,7 +23,7 @@ export function TableBody({ people, selectedPeople, onSelectPeople }) {
               onClick={() => onSelectPeople(person.name)}
               className="button"
             >
-              +
+              {isSelected(person) ? '-' : '+'}
             </button>
           </td>
         </tr>
