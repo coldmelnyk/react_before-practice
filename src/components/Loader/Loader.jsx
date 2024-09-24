@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-filename-extension */
 import './Loader.scss';
 
 export const Loader = () => (
