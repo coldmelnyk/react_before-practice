@@ -52,6 +52,23 @@ export function App() {
   const [sexSorting, setSexSorting] = useState('');
   const [bornSorting, setBornSorting] = useState('');
   const [filtering, setFiltering] = useState('');
+  const [selectedPeople, setSelectedPeople] = useState([]);
+
+  const handlerSelectPeople = name => {
+    if (!selectedPeople.includes(name)) {
+      const newArray = [...selectedPeople, name];
+
+      setSelectedPeople(newArray);
+    }
+
+    if (selectedPeople.includes(name)) {
+      let newArray = [...selectedPeople];
+
+      newArray = newArray.filter(person => person !== name);
+
+      setSelectedPeople(newArray);
+    }
+  };
 
   const handleFilter = text => setFiltering(text);
 
@@ -87,7 +104,7 @@ export function App() {
     setSexSorting('');
     setBornSorting('');
     setFiltering('');
-    setSelectedPerson('');
+    setSelectedPeople('');
   };
 
   const processedPeople = sortingAndFiltering(
@@ -97,7 +114,8 @@ export function App() {
     filtering,
   );
 
-  const hasNoSortOrFiltParam = !sexSorting && !bornSorting && !filtering;
+  const hasNoSortOrFiltParam =
+    !sexSorting && !bornSorting && !filtering && selectedPeople.length === 0;
 
   return (
     <div className="box">
@@ -144,7 +162,11 @@ export function App() {
       <table className="table is-striped is-narrow">
         <TableHead columns={columns} />
 
-        <TableBody people={processedPeople} />
+        <TableBody
+          people={processedPeople}
+          selectedPeople={selectedPeople}
+          onSelectPeople={handlerSelectPeople}
+        />
       </table>
     </div>
   );
